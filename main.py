@@ -45,6 +45,7 @@ def home():
     data_json = Data.query.all()
 
     print('this is from the db', data_json)
+    print('The program seems to be running')
 
     return render_template('index.html', stock_data = data_json['Weekly Time Series'])
 
