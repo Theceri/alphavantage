@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous" />
+
+    <!-- datatables -->
+    <link href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <title>AlphaVantage</title>
+</head>
+
+<body>
+    <div>
+        <table id="myTable" class="table">
+            <caption style="caption-side: top; color: #274C77; font-weight: bold;">Data</caption>
+            <thead>
+                <tr>
+                    <td>Date</td>
+                    <td>Open</td>
+                    <td>High</td>
+                    <td>Low</td>
+                    <td>Close</td>
+                    <td>Volume</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for date, stock in stock_data.items() %}
+                <tr>
+                    <th scope="col">{{ date }}</th>
+                    <th scope="col">{{stock["1. open"]}}</th>
+                    <th scope="col">{{stock["2. high"]}}</th>
+                    <th scope="col">{{stock["3. low"]}}</th>
+                    <th scope="col">{{stock["4. close"]}}</th>
+                    <th scope="col">{{stock["5. volume"]}}</th>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- datatables -->
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#myTable").DataTable(
+                {
+                    dom: 'Bfrtip',
+                    "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                        //debugger;
+                        var index = iDisplayIndexFull + 1;
+                        $("td:first", nRow).html(index);
+                        return nRow;
+                    },
+                    buttons: [
+                        'copy', 'csv', 'excel', 'pdf', 'print'
+                    ]
+                }
+            );
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+</body>
+
+</html>
