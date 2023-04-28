@@ -37,6 +37,7 @@ class Data(db.Model):
 @app.before_first_request
 def create_tables():
     db.create_all()
+    print('The tables have been created')
 
 @app.route('/')
 def home():
